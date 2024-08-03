@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-  "build": "browserify script.js -o bundle.js"
+    "build": "browserify script.js -o bundle.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "chart.js": "^4.4.3",
+    "chartjs-adapter-date-fns": "^3.0.0",
+    "date-fns": "^3.6.0",
     "moment": "^2.30.1"
   }
 }

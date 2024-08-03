@@ -20719,43 +20719,56 @@ exports.valueOrDefault = valueOrDefault;
 const moment = require("moment");
 
 let date = moment();
-console.log(date);
+
 const Chart = require('chart.js/auto');
 
+      var dateElement = document.querySelector('#current-date .date');
+      var monthElement = document.querySelector('#current-date .month');
+      var yearElement = document.querySelector('#current-date .year');
 
-const ctx = document.getElementById('myChart');
+      dateElement.textContent = date.date();
+      monthElement.textContent = date.format('MMMM');
+      yearElement.textContent = date.year();
+    
 
 
+fetch('schedule.json')
+.then(response => response.json())
+.then(data => {
+const days = data.map(item => item.day);
+const quantity = data.map(item => item.quantity);
+const tasks = data.map(item => item.task);
+console.log(days);
 // First chart
 const ctx1 = document.getElementById('myChart1');
 let chart1 = new Chart(ctx1, {
     type: 'bar',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: days,
         datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            borderWidth: 1
+            label: 'Расписание на неделю',
+            data: quantity,
+          borderWidth: 1
         }]
     },
     options: {
-        scales: {
-            y: {
+      scales: {
+        y: {
                 beginAtZero: true
-            }
         }
+      }
     }
-});
+  });
 
 // Second chart
 const ctx2 = document.getElementById('myChart2');
 let chart2 = new Chart(ctx2, {
     type: 'line',
     data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+        labels: tasks,
         datasets: [{
-            label: 'Sales',
-            data: [50, 60, 70, 80, 90, 100],
+            label:'Список дел',
+            data: quantity,
             borderWidth: 2
         }]
     },
@@ -20767,31 +20780,10 @@ let chart2 = new Chart(ctx2, {
         }
     }
 });
+})
+.catch((error)=> {
+    console.log(error.message);
+    });
 
-    // const data = [
-    //   { year: 2010, count: 10 },
-    //   { year: 2011, count: 20 },
-    //   { year: 2012, count: 15 },
-    //   { year: 2013, count: 25 },
-    //   { year: 2014, count: 22 },
-    //   { year: 2015, count: 30 },
-    //   { year: 2016, count: 28 },
-    // ];
-  
-    // let chart2 = new Chart(
-    //   document.getElementById('acquisitions'),
-    //   {
-    //     type: 'bar',
-    //     data: {
-    //       labels: data.map(row => row.year),
-    //       datasets: [
-    //         {
-    //           label: 'Acquisitions by year',
-    //           data: data.map(row => row.count)
-    //         }
-    //       ]
-    //     }
-    //   }
-    // );
 
 },{"chart.js/auto":2,"moment":5}]},{},[6]);
